@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "Excel (Debug)": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE",
+      "commandLineArgs": "/x \"bin\\Debug\\net9.0-windows7.0\\NumDesToolsFun-AddIn64.xll\"",
+      "workingDirectory": "$(ProjectDir)",
+      "environmentVariables": {
+        "EXCELDNA_DEBUG": "1"
+      }
+    },
+    "Excel": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE",
+      "commandLineArgs": "/x \"NumDesToolsFun-AddIn64.xll\""
+    }
+  }
+}
