@@ -1,5 +1,6 @@
-module MyRibbon
+module NumDesToolsFunRibbon
 
+open System
 open System.Windows.Forms
 open System.Runtime.InteropServices
 open Microsoft.Office.Interop.Excel
@@ -8,20 +9,81 @@ open ExcelDna.Integration.CustomUI
 open System.Reflection
 open System.IO   
 open System.Text
-
-// This defines a regular Excel macro (in Excel you can press Alt + F8, type in the name "showMessage", then click the Run button).
-// For the ribbon, it will be run through the ExcelRibbon.RunTagMacro(...) helper, which run whatever macro is specified in the button tag attribute
-// One advantage is that you can 
-[<ExcelCommand>]
-let showMessage () =
-    XlCall.Excel(XlCall.xlcAlert, "Hello from a macro!") 
-    |> ignore
-
+open System.Drawing
 
 // This type defines the ribbon interface. It is a public class that derives from ExcelRibbon
 [<ComVisible(true)>]    // This attribute is only needed if there is an assembly-level [<assembly:ComVisible(false)>] attribute.
-type public MyRibbon() =
+type public NumDesToolsFunRibbon() =
     inherit ExcelRibbon()
+
+    // 加载资源管理器
+    let resourceManager = 
+        new System.Resources.ResourceManager("NumDesToolsFun.Ribbon", Assembly.GetExecutingAssembly())
+
+    // 图片缓存
+    let imageCache = System.Collections.Generic.Dictionary<string, Bitmap>()
+
+    // 实现getImage回调
+    member this.OnGetImage(control: IRibbonControl) : Bitmap =
+        try
+            // 先检查缓存
+            if imageCache.ContainsKey(control.Id) then
+                imageCache.[control.Id]
+            else
+                // 从资源文件加载图片
+                let imageName = 
+                    match control.Id with
+                    | "Button1" -> "dart"
+                    | "Button2" -> "lacrosse" 
+                    | "Button3" -> "sofa"
+                    | _ -> ""
+                
+                if not (String.IsNullOrEmpty(imageName)) then
+                    try
+                        // 从.resx资源文件获取图片
+                        let imageObj = resourceManager.GetObject(imageName)
+                        match imageObj with
+                        | :? Bitmap as bitmap ->
+                            imageCache.Add(control.Id, bitmap)
+                            bitmap
+                        | _ -> null
+                    with
+                    | ex -> 
+                        // 如果.resx中没有，尝试从嵌入式资源加载
+                        this.LoadFromEmbeddedResource(imageName)
+                else
+                    null
+        with
+        | ex -> 
+            System.Diagnostics.Debug.WriteLine(sprintf "加载图片失败 %s: %s" control.Id ex.Message)
+            null
+
+    // 从嵌入式资源加载图片（备份方案）
+    member private this.LoadFromEmbeddedResource(imageName: string) : Bitmap =
+        try
+            let assembly = Assembly.GetExecutingAssembly()
+            let resourceNames = assembly.GetManifestResourceNames()
+            
+            // 查找包含image文件夹的资源
+            let resourceName = 
+                resourceNames 
+                |> Array.tryFind (fun name -> 
+                    name.Contains("image") && 
+                    (name.Contains(imageName + ".png") || 
+                     name.Contains(imageName + ".jpg") || 
+                     name.Contains(imageName + ".bmp")))
+            
+            match resourceName with
+            | Some resName ->
+                use stream = assembly.GetManifestResourceStream(resName)
+                if stream <> null then
+                    new Bitmap(stream)
+                else
+                    null
+            | None -> null
+        with
+        | _ -> null
+
 
     // The ribbon xml definition could also be placed in the .dna file
     // Remember to switch on the ExcelOption "Show add-in user interface errors" option (under the Advanced tab under General)
@@ -75,3 +137,12 @@ type public MyRibbon() =
         // could also replace the last line with
         //     cellA1.Value(XlRangeValueDataType.xlRangeValueDefault) <- app.Version 
         // but Range.Value is an indexer property, so it's a bit inconvenient
+
+// This defines a regular Excel macro (in Excel you can press Alt + F8, type in the name "showMessage", then click the Run button).
+// For the ribbon, it will be run through the ExcelRibbon.RunTagMacro(...) helper, which run whatever macro is specified in the button tag attribute
+// One advantage is that you can 
+[<ExcelCommand>]
+let showMessage () =
+    XlCall.Excel(XlCall.xlcAlert, "Ribbon调用宏命令") 
+    |> ignore
+

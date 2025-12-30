@@ -23,4 +23,56 @@
     <PackageReference Include="ExcelDna.Testing" Version="1.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="image\dart.png" />
+    <Content Include="image\lacrosse.png" />
+    <EmbeddedResource Include="image\sofa.png" />
+    <EmbeddedResource Include="image\angular-resolver.png" />
+    <EmbeddedResource Include="image\applescript.png" />
+    <EmbeddedResource Include="image\asciidoc.png" />
+    <EmbeddedResource Include="image\audio.png" />
+    <EmbeddedResource Include="image\authors.png" />
+    <EmbeddedResource Include="image\autohotkey.png" />
+    <EmbeddedResource Include="image\bower.png" />
+    <EmbeddedResource Include="image\codecov.png" />
+    <EmbeddedResource Include="image\console.png" />
+    <EmbeddedResource Include="image\cpp.png" />
+    <EmbeddedResource Include="image\csharp.png" />
+    <EmbeddedResource Include="image\database.png" />
+    <EmbeddedResource Include="image\diff.png" />
+    <EmbeddedResource Include="image\document.png" />
+    <EmbeddedResource Include="image\edge.png" />
+    <EmbeddedResource Include="image\ejs.png" />
+    <EmbeddedResource Include="image\email.png" />
+    <EmbeddedResource Include="image\file.png" />
+    <EmbeddedResource Include="image\folder-android.png" />
+    <EmbeddedResource Include="image\folder-audio.png" />
+    <EmbeddedResource Include="image\folder-aws.png" />
+    <EmbeddedResource Include="image\folder-ci-open.png" />
+    <EmbeddedResource Include="image\folder-command.png" />
+    <EmbeddedResource Include="image\folder-components.png" />
+    <EmbeddedResource Include="image\folder-docs.png" />
+    <EmbeddedResource Include="image\folder.png" />
+    <EmbeddedResource Include="image\font.png" />
+    <EmbeddedResource Include="image\key.png" />
+    <EmbeddedResource Include="image\log.png" />
+    <EmbeddedResource Include="image\reason.png" />
+    <EmbeddedResource Include="image\redux-reducer.png" />
+    <EmbeddedResource Include="image\scheme.png" />
+    <EmbeddedResource Include="image\shaderlab.png" />
+    <EmbeddedResource Include="image\verilog.png" />
+    <EmbeddedResource Include="image\video.png" />
+    <EmbeddedResource Include="image\visualstudio.png" />
+    <EmbeddedResource Include="image\vscode.png" />
+    <EmbeddedResource Include="image\yang.png" />
+    <EmbeddedResource Include="image\yellowFolder.png" />
+    <EmbeddedResource Include="image\zip.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Ribbon.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
