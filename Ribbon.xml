@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<customUI xmlns='http://schemas.microsoft.com/office/2009/07/customui' loadImage='LoadImage' onLoad='OnLoad'>
+    <ribbon startFromScratch='false'>
+    <!-- < ribbon startFromScratch = 'false' >//表示加载时excel原有的选项卡隐藏否 -->
+        <tabs>
+            <tab id='MainTab' label='NumDesToolsF#' insertBeforeMso='TabHome'>
+                <group id='SampleGroup' label='样例组'>
+                    <button id='Button1' label='Run a macro' onAction='RunTagMacro' tag='showMessage' />
+                    <button id='Button2' label='Run a class member' onAction='OnButtonPressed'/>
+                    <button id='Button3' label='Dump the Excel Version to cell A1' onAction='OnDumpData'/>
+                </group>
+            </tab>
+            <tab id='SecondTab' label='NumDesToolsF#Plus' insertBeforeMso='TabHome'>
+                <group id='Group10' label='玩法计算'>
+                </group>
+            </tab>
+
+        </tabs>
+    </ribbon>
+    <!--
+    <contextMenus>
+        <contextMenu idMso='ContextMenuCell'>
+            <button id='UnRibbonContextMenuTips' label='更多右键菜单[Ctr+Q]' getVisible='GetVisible' screentip='使用快捷键打开自定义右键功能,点击无效' insertBeforeMso='Cut' onAction='RightClickMergeData' />
+            <menu id='SubMenu' label='Sub Menu'>
+                <button id='SubMenu_Item1' label='Sub Item 1' onAction='OnMenuItemClicked' />
+                <button id='SubMenu_Item2' label='Sub Item 2' onAction='OnMenuItemClicked' />
+            </menu>
+        </contextMenu>
+    </contextMenus>
+    -->
+</customUI>

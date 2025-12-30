@@ -7,7 +7,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "C:\\Program Files\\Microsoft Office\\root\\Office16\\EXCEL.EXE",
-            "args": ["/x", "${workspaceFolder}\\bin\\Debug\\net9.0-windows7.0\\NumDesToolsFun-AddIn64.xll"],
+            "args": ["/x", "${workspaceFolder}\\bin\\Debug\\net9.0-windows\\NumDesToolsFun-AddIn64.xll"],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "console": "externalTerminal",
