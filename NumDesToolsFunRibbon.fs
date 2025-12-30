@@ -12,7 +12,7 @@ open System.Text
 open System.Drawing
 
 // This type defines the ribbon interface. It is a public class that derives from ExcelRibbon
-[<ComVisible(true)>]    // This attribute is only needed if there is an assembly-level [<assembly:ComVisible(false)>] attribute.
+[<ComVisible(false)>]    // True打开Ribbon，否则关闭
 type public NumDesToolsFunRibbon() =
     inherit ExcelRibbon()
 
