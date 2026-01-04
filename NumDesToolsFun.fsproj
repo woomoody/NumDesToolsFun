@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="NumDesToolsFun-AddIn64.dna" />
     <EmbeddedResource Include="Ribbon.xml" />
     <Compile Include="NumDesToolsFunRibbon.fs" />
     <Compile Include="NumDesToolsFun.fs" />
@@ -75,6 +76,8 @@
     <EmbeddedResource Include="image\yellowFolder.png" />
     <EmbeddedResource Include="image\zip.png" />
   </ItemGroup>
+
+  <ItemGroup />
 
   <ItemGroup>
     <EmbeddedResource Update="Ribbon.resx">
