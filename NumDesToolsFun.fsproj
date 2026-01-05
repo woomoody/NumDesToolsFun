@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="NumDesToolsFun-AddIn64.dna" />
     <EmbeddedResource Include="Ribbon.xml" />
     <Compile Include="NumDesToolsFunRibbon.fs" />
     <Compile Include="NumDesToolsFun.fs" />
@@ -77,8 +76,6 @@
     <EmbeddedResource Include="image\zip.png" />
   </ItemGroup>
 
-  <ItemGroup />
-
   <ItemGroup>
     <EmbeddedResource Update="Ribbon.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -89,7 +86,7 @@
     <PostBuildEvent>if exist "$(SolutionDir)packFromBin\ReNamePack.bat" (call "$(SolutionDir)packFromBin\ReNamePack.bat" /y)</PostBuildEvent>
   </PropertyGroup>
   
- <PropertyGroup>
+<PropertyGroup>
     <!--
     Enable/Disable setting the debug options when building the project
     -->
@@ -148,6 +145,6 @@
     <ExcelDnaPackRunMultithreaded  Condition="'$(ConfigurationName)' == 'Debug'">false</ExcelDnaPackRunMultithreaded>
     <ExcelDnaPackRunMultithreaded  Condition="'$(ConfigurationName)' == 'Release'">false</ExcelDnaPackRunMultithreaded>
     -->
-
+    
   </PropertyGroup>
 </Project>
