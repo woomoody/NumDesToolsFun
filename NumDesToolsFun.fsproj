@@ -77,6 +77,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="NumDesToolsFun-AddIn64.dna">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Ribbon.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
