@@ -15,39 +15,45 @@ module NumDesToolsFun =
     let SayHello name = "Hello " + name
 
     [<ExcelFunction(Category="UDF-组装字符串", IsVolatile=true, IsMacroType=true,Description="拼接Range数据")>]
-    let CreatValueToArrayFun 
+    let CreatValueToArrayFun
         ([<ExcelArgument(Description="单元格范围")>] rangeObj: obj[,])
         ([<ExcelArgument(Description="默认值范围")>] rangeObjDef: obj[,])
         ([<ExcelArgument(Description="分隔符")>] delimiter: string)
-        ([<ExcelArgument(Description="过滤值")>] ignoreValue: string) =
-        
-        let mutable result = ""
-        let delimiter = if String.IsNullOrEmpty(delimiter) then "[,]" else delimiter
-        let delimiterList = delimiter.ToCharArray() |> Array.map string
-        
-        let startDelimiter, midDelimiter, endDelimiter = 
-            if delimiterList.Length = 3 then
-                delimiterList.[0], delimiterList.[1], delimiterList.[2]
-            else
-                "", delimiterList.[0], ""
-        
-        let rows = rangeObj.GetLength(0)
-        let cols = rangeObj.GetLength(1)
-        
-        for row in 0 .. rows - 1 do
-            for col in 0 .. cols - 1 do
-                let item = rangeObj.[row, col]
-                match item with
-                | :? ExcelEmpty -> ()
-                | _ when item.ToString() = ignoreValue -> ()
-                | :? ExcelError -> ()
-                | _ ->
-                    if rangeObjDef.[0, 0] :? ExcelMissing then
-                        result <- result + item.ToString() + midDelimiter
-                    else
-                        result <- result + rangeObjDef.[row, col].ToString() + midDelimiter
-        
-        if not (String.IsNullOrEmpty(result)) then
-            startDelimiter + result.Substring(0, result.Length - 1) + endDelimiter
-        else
+        ([<ExcelArgument(Description="过滤值")>] ignoreValue: string)  =
+
+        // 添加类型注解，使用完整的类型名称
+        let isInvalidCell (value: obj) =
+            match value with
+            | :? ExcelDna.Integration.ExcelEmpty as _ -> true
+            | :? ExcelDna.Integration.ExcelError as _ -> true
+            | cell when cell.ToString() = ignoreValue -> true
+            | _ -> false
+
+        let (start, mid, finish) =
+            let delim = if System.String.IsNullOrEmpty(delimiter) then "[,]" else delimiter
+            match delim.ToCharArray() |> Array.toList with
+            | [s; m; f] -> (string s, string m, string f)
+            | m::_ -> ("", string m, "")
+            | [] -> ("", ",", "")
+
+        let useDefault = 
+            let firstCell = rangeObjDef.[0, 0]
+            match firstCell with
+            | :? ExcelDna.Integration.ExcelMissing -> false
+            | _ -> true
+
+        // 使用数组推导式避免类型推断问题
+        let allCells = 
+            [| for i in 0 .. Array2D.length1 rangeObj - 1 do
+                for j in 0 .. Array2D.length2 rangeObj - 1 do
+                    if not (isInvalidCell rangeObj.[i, j]) then
+                        if useDefault then
+                            yield rangeObjDef.[i, j].ToString()
+                        else
+                            yield rangeObj.[i, j].ToString() |]
+
+        if allCells.Length = 0 then
             ""
+        else
+            let result = String.concat mid allCells
+            start + result + finish
